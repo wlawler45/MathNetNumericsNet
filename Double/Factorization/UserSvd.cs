@@ -28,7 +28,7 @@
 // </copyright>
 
 using System;
-
+using MathNet.Numerics.LinearAlgebra.Double.MathNet.Numerics.LinearAlgebra;
 
 namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
 {
@@ -57,20 +57,22 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
         /// <exception cref="ArgumentNullException">If <paramref name="matrix"/> is <c>null</c>.</exception>
         /// <exception cref="NonConvergenceException"></exception>
         /// 
-        
+
+        private new static VectorBuilder<double> v_builder = BuilderInstance<double>.Vector;
+        private new static MatrixBuilder<double> m_builder = BuilderInstance<double>.Matrix;
+
         public static UserSvd Create(Matrix<double> matrix, bool computeVectors)
         {
             var nm = Math.Min(matrix.RowCount + 1, matrix.ColumnCount);
             var matrixCopy = matrix.Clone();
 
-            var s = Vector<double>.Build.SameAs(matrixCopy, nm);
-            var u = Matrix<double>.Build.SameAs(matrixCopy, matrixCopy.RowCount, matrixCopy.RowCount, fullyMutable: true);
-            var vt = Matrix<double>.Build.SameAs(matrixCopy, matrixCopy.ColumnCount, matrixCopy.ColumnCount, fullyMutable: true);
+            var s = v_builder.SameAs(matrixCopy, nm);
+            var u = m_builder.SameAs(matrixCopy, matrixCopy.RowCount, matrixCopy.RowCount, fullyMutable: true);
+            var vt = m_builder.SameAs(matrixCopy, matrixCopy.ColumnCount, matrixCopy.ColumnCount, fullyMutable: true);
 
             const int maxiter = 1000;
             var e = new double[matrixCopy.ColumnCount];
             var work = new double[matrixCopy.RowCount];
-
             int i, j;
             int l, lp1;
             double t;
@@ -188,7 +190,6 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                     }
                 }
             }
-
             // Set up the final bidiagonal matrixCopy or order m.
             var m = Math.Min(matrixCopy.ColumnCount, matrixCopy.RowCount + 1);
             var nctp1 = nct + 1;
@@ -329,7 +330,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
             var iter = 0;
             bool AlmostEquals(double val1, double val2)
             {
-                if (Math.Abs(val1 - val2) < (1 * 10 ^ -8)) return true;
+                if (Math.Abs(val1 - val2) < 1e-8) return true;
                 return false;
             }
 
@@ -354,7 +355,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                 {
                     test = Math.Abs(s[l]) + Math.Abs(s[l + 1]);
                     ztest = test + Math.Abs(e[l]);
-                    if (AlmostEquals(ztest,test))
+                    if (AlmostEquals(test, ztest))
                     {
                         e[l] = 0.0;
                         break;
@@ -374,7 +375,6 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                         test = 0.0;
                         if (ls != m - 1)
                         {
-                            
                             test = test + Math.Abs(e[ls]);
                         }
 
@@ -384,7 +384,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                         }
 
                         ztest = test + Math.Abs(s[ls]);
-                        if (AlmostEquals(ztest,test))
+                        if (AlmostEquals(test, ztest))
                         {
                             s[ls] = 0.0;
                             break;
@@ -407,19 +407,19 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                 }
 
                 l = l + 1;
-
+                
                 // Perform the task indicated by case.
                 int k;
                 double f;
                 double sn;
                 double cs;
+                double t1;
                 switch (kase)
                 {
                         // Deflate negligible VectorS[m].
                     case 1:
                         f = e[m - 2];
                         e[m - 2] = 0.0;
-                        double t1;
                         for (var kk = l; kk < m - 1; kk++)
                         {
                             k = m - 2 - kk + l;
@@ -456,7 +456,6 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                                 Drot(u, matrixCopy.RowCount, k, l - 1, cs, sn);
                             }
                         }
-
                         break;
 
                         // Perform one qr step.
@@ -565,6 +564,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                         break;
                 }
             }
+            
 
             if (computeVectors)
             {
@@ -577,7 +577,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
             if (matrixCopy.RowCount < matrixCopy.ColumnCount)
             {
                 nm--;
-                var tmp = Vector<double>.Build.SameAs(matrixCopy, nm);
+                var tmp = v_builder.SameAs(matrixCopy, nm);
                 for (i = 0; i < nm; i++)
                 {
                     tmp[i] = s[i];
@@ -664,7 +664,6 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
         static void Drotg(ref double da, ref double db, out double c, out double s)
         {
             double r, z;
-
             var roe = db;
             var absda = Math.Abs(da);
             var absdb = Math.Abs(db);

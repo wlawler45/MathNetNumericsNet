@@ -381,7 +381,7 @@ namespace mathnetnumericsbridge
                 int n1 = 99999997;
                 int realHash = m_real.GetHashCode() % n1;
                 int imaginaryHash = m_imaginary.GetHashCode();
-                int finalHash = realHash ^ imaginaryHash;
+                int finalHash = (int) Math.Pow(realHash, imaginaryHash);
                 return finalHash;
             }
 

@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 
 using MathNet.Numerics.LinearAlgebra.Storage;
+using MathNet.Numerics.LinearAlgebra.Double.MathNet.Numerics.LinearAlgebra;
 
 namespace MathNet.Numerics.LinearAlgebra
 {
@@ -43,7 +44,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> WithStorage<T>(MatrixStorage<T> storage)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.OfStorage(storage);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.OfStorage(storage);
         }
 
         /// <summary>
@@ -53,7 +55,8 @@ namespace MathNet.Numerics.LinearAlgebra
             where T : struct, IEquatable<T>, IFormattable
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            return Matrix<T>.Build.SameAs(example, rows, columns, fullyMutable);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SameAs(example, rows, columns, fullyMutable);
         }
 
         /// <summary>
@@ -63,7 +66,8 @@ namespace MathNet.Numerics.LinearAlgebra
             where T : struct, IEquatable<T>, IFormattable
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            return Matrix<T>.Build.SameAs(example);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SameAs(example);
         }
 
         /// <summary>
@@ -72,7 +76,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SameAs<T>(Vector<T> example, int rows, int columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SameAs(example, rows, columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SameAs(example, rows, columns);
         }
 
         /// <summary>
@@ -81,7 +86,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SameAs<T>(Matrix<T> example, Matrix<T> otherExample, int rows, int columns, bool fullyMutable = false)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SameAs(example, otherExample, rows, columns, fullyMutable);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SameAs(example, otherExample, rows, columns, fullyMutable);
         }
 
         /// <summary>
@@ -90,7 +96,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SameAs<T>(Matrix<T> example, Matrix<T> otherExample)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SameAs(example, otherExample);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SameAs(example, otherExample);
         }
 
         /// <summary>
@@ -118,7 +125,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Dense<T>(DenseColumnMajorMatrixStorage<T> storage)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Dense(storage);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Dense(storage);
         }
 
         /// <summary>
@@ -129,7 +137,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Dense<T>(int rows, int columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Dense(rows, columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Dense(rows, columns);
         }
 
         /// <summary>
@@ -141,7 +150,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Dense<T>(int rows, int columns, T[] storage)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Dense(rows, columns, storage);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Dense(rows, columns, storage);
         }
 
         /// <summary>
@@ -150,7 +160,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Dense<T>(int rows, int columns, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Dense(rows, columns, value);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Dense(rows, columns, value);
         }
 
         /// <summary>
@@ -159,7 +170,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Dense<T>(int rows, int columns, Func<int, int, T> init)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Dense(rows, columns, init);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Dense(rows, columns, init);
         }
 
         /// <summary>
@@ -168,7 +180,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseDiagonal<T>(int rows, int columns, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseDiagonal(rows, columns, value);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseDiagonal(rows, columns, value);
         }
 
         /// <summary>
@@ -177,7 +190,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseDiagonal<T>(int order, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseDiagonal(order, value);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseDiagonal(order, value);
         }
 
         /// <summary>
@@ -186,7 +200,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseDiagonal<T>(int rows, int columns, Func<int, T> init)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseDiagonal(rows, columns, init);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseDiagonal(rows, columns, init);
         }
 
         /// <summary>
@@ -195,7 +210,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseIdentity<T>(int rows, int columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseIdentity(rows, columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseIdentity(rows, columns);
         }
 
         /// <summary>
@@ -204,7 +220,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseIdentity<T>(int order)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseIdentity(order);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseIdentity(order);
         }
 
         /// <summary>
@@ -215,7 +232,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfMatrix<T>(Matrix<T> matrix)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfMatrix(matrix);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfMatrix(matrix);
         }
 
         /// <summary>
@@ -226,7 +244,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfArray<T>(T[,] array)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfArray(array);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfArray(array);
         }
 
         /// <summary>
@@ -238,7 +257,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfIndexed<T>(int rows, int columns, IEnumerable<Tuple<int, int, T>> enumerable)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfIndexed(rows, columns, enumerable);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfIndexed(rows, columns, enumerable);
         }
 
         /// <summary>
@@ -250,7 +270,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfColumnMajor<T>(int rows, int columns, IEnumerable<T> columnMajor)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfColumnMajor(rows, columns, columnMajor);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfColumnMajor(rows, columns, columnMajor);
         }
 
         /// <summary>
@@ -262,7 +283,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfColumns<T>(IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfColumns(data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfColumns(data);
         }
 
         /// <summary>
@@ -274,7 +296,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfColumns<T>(int rows, int columns, IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfColumns(rows, columns, data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfColumns(rows, columns, data);
         }
 
         /// <summary>
@@ -285,7 +308,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfColumnArrays<T>(params T[][] columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfColumnArrays(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfColumnArrays(columns);
         }
 
         /// <summary>
@@ -296,7 +320,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfColumnArrays<T>(IEnumerable<T[]> columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfColumnArrays(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfColumnArrays(columns);
         }
 
         /// <summary>
@@ -307,7 +332,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfColumnVectors<T>(params Vector<T>[] columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfColumnVectors(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfColumnVectors(columns);
         }
 
         /// <summary>
@@ -318,7 +344,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfColumnVectors<T>(IEnumerable<Vector<T>> columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfColumnVectors(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfColumnVectors(columns);
         }
 
         /// <summary>
@@ -330,7 +357,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfRows<T>(IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfRows(data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfRows(data);
         }
 
         /// <summary>
@@ -342,7 +370,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfRows<T>(int rows, int columns, IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfRows(rows, columns, data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfRows(rows, columns, data);
         }
 
         /// <summary>
@@ -353,7 +382,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfRowArrays<T>(params T[][] rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfRowArrays(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfRowArrays(rows);
         }
 
         /// <summary>
@@ -364,7 +394,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfRowArrays<T>(IEnumerable<T[]> rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfRowArrays(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfRowArrays(rows);
         }
 
         /// <summary>
@@ -375,7 +406,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfRowVectors<T>(params Vector<T>[] rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfRowVectors(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfRowVectors(rows);
         }
 
         /// <summary>
@@ -386,7 +418,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfRowVectors<T>(IEnumerable<Vector<T>> rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfRowVectors(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfRowVectors(rows);
         }
 
         /// <summary>
@@ -397,7 +430,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfDiagonalVector<T>(Vector<T> diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfDiagonalVector(diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfDiagonalVector(diagonal);
         }
 
         /// <summary>
@@ -408,7 +442,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfDiagonalVector<T>(int rows, int columns, Vector<T> diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfDiagonalVector(rows, columns, diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfDiagonalVector(rows, columns, diagonal);
         }
 
         /// <summary>
@@ -419,7 +454,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfDiagonalArray<T>(T[] diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfDiagonalArray(diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfDiagonalArray(diagonal);
         }
 
         /// <summary>
@@ -430,7 +466,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfDiagonalArray<T>(int rows, int columns, T[] diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfDiagonalArray(rows, columns, diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfDiagonalArray(rows, columns, diagonal);
         }
 
         /// <summary>
@@ -442,7 +479,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DenseOfMatrixArray<T>(Matrix<T>[,] matrices)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DenseOfMatrixArray(matrices);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DenseOfMatrixArray(matrices);
         }
 
         /// <summary>
@@ -454,7 +492,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Sparse<T>(SparseCompressedRowMatrixStorage<T> storage)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Sparse(storage);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Sparse(storage);
         }
 
         /// <summary>
@@ -465,7 +504,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Sparse<T>(int rows, int columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Sparse(rows, columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Sparse(rows, columns);
         }
 
         /// <summary>
@@ -474,7 +514,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Sparse<T>(int rows, int columns, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Sparse(rows, columns, value);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Sparse(rows, columns, value);
         }
 
         /// <summary>
@@ -483,7 +524,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Sparse<T>(int rows, int columns, Func<int, int, T> init)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Sparse(rows, columns, init);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Sparse(rows, columns, init);
         }
 
         /// <summary>
@@ -492,7 +534,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseDiagonal<T>(int rows, int columns, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseDiagonal(rows, columns, value);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseDiagonal(rows, columns, value);
         }
 
         /// <summary>
@@ -501,7 +544,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseDiagonal<T>(int order, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseDiagonal(order, value);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseDiagonal(order, value);
         }
 
         /// <summary>
@@ -510,7 +554,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseDiagonal<T>(int rows, int columns, Func<int, T> init)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseDiagonal(rows, columns, init);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseDiagonal(rows, columns, init);
         }
 
         /// <summary>
@@ -519,7 +564,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseIdentity<T>(int rows, int columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseIdentity(rows, columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseIdentity(rows, columns);
         }
 
         /// <summary>
@@ -528,7 +574,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseIdentity<T>(int order)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseIdentity(order);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseIdentity(order);
         }
 
         /// <summary>
@@ -539,7 +586,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfMatrix<T>(Matrix<T> matrix)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfMatrix(matrix);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfMatrix(matrix);
         }
 
         /// <summary>
@@ -550,7 +598,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfArray<T>(T[,] array)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfArray(array);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfArray(array);
         }
 
         /// <summary>
@@ -562,7 +611,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfIndexed<T>(int rows, int columns, IEnumerable<Tuple<int, int, T>> enumerable)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfIndexed(rows, columns, enumerable);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfIndexed(rows, columns, enumerable);
         }
 
         /// <summary>
@@ -575,7 +625,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfRowMajor<T>(int rows, int columns, IEnumerable<T> rowMajor)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfRowMajor(rows, columns, rowMajor);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfRowMajor(rows, columns, rowMajor);
         }
 
         /// <summary>
@@ -588,7 +639,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfColumnMajor<T>(int rows, int columns, IList<T> columnMajor)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfColumnMajor(rows, columns, columnMajor);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfColumnMajor(rows, columns, columnMajor);
         }
 
         /// <summary>
@@ -600,7 +652,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfColumns<T>(IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfColumns(data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfColumns(data);
         }
 
         /// <summary>
@@ -612,7 +665,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfColumns<T>(int rows, int columns, IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfColumns(rows, columns, data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfColumns(rows, columns, data);
         }
 
         /// <summary>
@@ -623,7 +677,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfColumnArrays<T>(params T[][] columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfColumnArrays(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfColumnArrays(columns);
         }
 
         /// <summary>
@@ -634,7 +689,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfColumnArrays<T>(IEnumerable<T[]> columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfColumnArrays(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfColumnArrays(columns);
         }
 
         /// <summary>
@@ -645,7 +701,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfColumnVectors<T>(params Vector<T>[] columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfColumnVectors(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfColumnVectors(columns);
         }
 
         /// <summary>
@@ -656,7 +713,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfColumnVectors<T>(IEnumerable<Vector<T>> columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfColumnVectors(columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfColumnVectors(columns);
         }
 
         /// <summary>
@@ -668,7 +726,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfRows<T>(IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfRows(data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfRows(data);
         }
 
         /// <summary>
@@ -680,7 +739,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfRows<T>(int rows, int columns, IEnumerable<IEnumerable<T>> data)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfRows(rows, columns, data);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfRows(rows, columns, data);
         }
 
         /// <summary>
@@ -691,7 +751,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfRowArrays<T>(params T[][] rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfRowArrays(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfRowArrays(rows);
         }
 
         /// <summary>
@@ -702,7 +763,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfRowArrays<T>(IEnumerable<T[]> rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfRowArrays(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfRowArrays(rows);
         }
 
         /// <summary>
@@ -713,7 +775,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfRowVectors<T>(params Vector<T>[] rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfRowVectors(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfRowVectors(rows);
         }
 
         /// <summary>
@@ -724,7 +787,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfRowVectors<T>(IEnumerable<Vector<T>> rows)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfRowVectors(rows);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfRowVectors(rows);
         }
 
         /// <summary>
@@ -735,7 +799,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfDiagonalVector<T>(Vector<T> diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfDiagonalVector(diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfDiagonalVector(diagonal);
         }
 
         /// <summary>
@@ -746,7 +811,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfDiagonalVector<T>(int rows, int columns, Vector<T> diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfDiagonalVector(rows, columns, diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfDiagonalVector(rows, columns, diagonal);
         }
 
         /// <summary>
@@ -757,7 +823,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfDiagonalArray<T>(T[] diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfDiagonalArray(diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfDiagonalArray(diagonal);
         }
 
         /// <summary>
@@ -768,7 +835,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfDiagonalArray<T>(int rows, int columns, T[] diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfDiagonalArray(rows, columns, diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfDiagonalArray(rows, columns, diagonal);
         }
 
         /// <summary>
@@ -780,7 +848,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> SparseOfMatrixArray<T>(Matrix<T>[,] matrices)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.SparseOfMatrixArray(matrices);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.SparseOfMatrixArray(matrices);
         }
 
         /// <summary>
@@ -792,7 +861,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Diagonal<T>(DiagonalMatrixStorage<T> storage)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Diagonal(storage);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Diagonal(storage);
         }
 
         /// <summary>
@@ -803,7 +873,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Diagonal<T>(int rows, int columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Diagonal(rows, columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Diagonal(rows, columns);
         }
 
         /// <summary>
@@ -814,7 +885,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Diagonal<T>(int rows, int columns, T[] storage)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Diagonal(rows, columns, storage);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Diagonal(rows, columns, storage);
         }
 
         /// <summary>
@@ -825,7 +897,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Diagonal<T>(T[] storage)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Diagonal(storage);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Diagonal(storage);
         }
 
         /// <summary>
@@ -834,7 +907,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Diagonal<T>(int rows, int columns, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Diagonal(rows, columns, value);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Diagonal(rows, columns, value);
         }
 
         /// <summary>
@@ -843,7 +917,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> Diagonal<T>(int rows, int columns, Func<int, T> init)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.Diagonal(rows, columns, init);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.Diagonal(rows, columns, init);
         }
 
         /// <summary>
@@ -852,7 +927,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DiagonalIdentity<T>(int rows, int columns)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DiagonalIdentity(rows, columns);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DiagonalIdentity(rows, columns);
         }
 
         /// <summary>
@@ -861,7 +937,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DiagonalIdentity<T>(int order)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DiagonalIdentity(order);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DiagonalIdentity(order);
         }
 
 
@@ -873,7 +950,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DiagonalOfDiagonalVector<T>(Vector<T> diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DiagonalOfDiagonalVector(diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DiagonalOfDiagonalVector(diagonal);
         }
 
         /// <summary>
@@ -884,7 +962,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DiagonalOfDiagonalVector<T>(int rows, int columns, Vector<T> diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DiagonalOfDiagonalVector(rows, columns, diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DiagonalOfDiagonalVector(rows, columns, diagonal);
         }
 
         /// <summary>
@@ -895,7 +974,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DiagonalOfDiagonalArray<T>(T[] diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DiagonalOfDiagonalArray(diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DiagonalOfDiagonalArray(diagonal);
         }
 
         /// <summary>
@@ -906,7 +986,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Matrix<T> DiagonalOfDiagonalArray<T>(int rows, int columns, T[] diagonal)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Matrix<T>.Build.DiagonalOfDiagonalArray(rows, columns, diagonal);
+            MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+            return m_builder.DiagonalOfDiagonalArray(rows, columns, diagonal);
         }
     }
 }

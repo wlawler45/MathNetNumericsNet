@@ -33,6 +33,7 @@ using System.Diagnostics;
 using System.Linq;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.LinearAlgebra.Storage;
+using MathNet.Numerics.LinearAlgebra.Double.MathNet.Numerics.LinearAlgebra;
 
 
 namespace MathNet.Numerics.LinearAlgebra.Double
@@ -376,7 +377,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         /// <returns>The lower triangle of this matrix.</returns>
         public override Matrix<double> LowerTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             LowerTriangleImpl(result);
             return result;
         }
@@ -401,7 +402,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
 
             if (ReferenceEquals(this, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 LowerTriangle(tmp);
                 tmp.CopyTo(result);
             }
@@ -441,7 +442,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         /// <returns>The upper triangle of this matrix.</returns>
         public override Matrix<double> UpperTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             UpperTriangleImpl(result);
             return result;
         }
@@ -466,7 +467,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
 
             if (ReferenceEquals(this, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 UpperTriangle(tmp);
                 tmp.CopyTo(result);
             }
@@ -507,7 +508,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         /// <returns>The lower triangle of this matrix.</returns>
         public override Matrix<double> StrictlyLowerTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             StrictlyLowerTriangleImpl(result);
             return result;
         }
@@ -532,7 +533,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
 
             if (ReferenceEquals(this, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 StrictlyLowerTriangle(tmp);
                 tmp.CopyTo(result);
             }
@@ -573,7 +574,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         /// <returns>The upper triangle of this matrix.</returns>
         public override Matrix<double> StrictlyUpperTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             StrictlyUpperTriangleImpl(result);
             return result;
         }
@@ -598,7 +599,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
 
             if (ReferenceEquals(this, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 StrictlyUpperTriangle(tmp);
                 tmp.CopyTo(result);
             }

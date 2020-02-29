@@ -31,6 +31,7 @@ using System;
 using MathNet.Numerics.LinearAlgebra.Double.Factorization;
 using MathNet.Numerics.LinearAlgebra.Factorization;
 using MathNet.Numerics.LinearAlgebra.Storage;
+using MathNet.Numerics.LinearAlgebra.Double.MathNet.Numerics.LinearAlgebra;
 
 
 namespace MathNet.Numerics.LinearAlgebra.Double
@@ -41,6 +42,9 @@ namespace MathNet.Numerics.LinearAlgebra.Double
     [Serializable]
     public abstract class Matrix : Matrix<double>
     {
+        public VectorBuilder<double> v_builder = BuilderInstance<double>.Vector;
+        public MatrixBuilder<double> m_builder = BuilderInstance<double>.Matrix;
+
         /// <summary>
         /// Initializes a new instance of the Matrix class.
         /// </summary>
@@ -652,7 +656,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
                 double invnorm = 1.0/norm;
                 Storage.FoldByRowUnchecked(ret, (s, x) => s + Math.Pow(Math.Abs(x), norm), (x, c) => Math.Pow(x, invnorm), ret, Zeros.AllowSkip);
             }
-            return Vector<double>.Build.Dense(ret);
+            return v_builder.Dense(ret);
         }
 
         /// <summary>
@@ -684,7 +688,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
                 double invnorm = 1.0/norm;
                 Storage.FoldByColumnUnchecked(ret, (s, x) => s + Math.Pow(Math.Abs(x), norm), (x, c) => Math.Pow(x, invnorm), ret, Zeros.AllowSkip);
             }
-            return Vector<double>.Build.Dense(ret);
+            return v_builder.Dense(ret);
         }
 
         /// <summary>
@@ -699,7 +703,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
                 norminv[i] = norminv[i] == 0d ? 1d : 1d/norminv[i];
             }
 
-            var result = Build.SameAs(this, RowCount, ColumnCount);
+            var result = m_builder.SameAs(this, RowCount, ColumnCount);
             Storage.MapIndexedTo(result.Storage, (i, j, x) => norminv[i]*x, Zeros.AllowSkip, ExistingData.AssumeZeros);
             return result;
         }
@@ -716,7 +720,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
                 norminv[i] = norminv[i] == 0d ? 1d : 1d/norminv[i];
             }
 
-            var result = Build.SameAs(this, RowCount, ColumnCount);
+            var result = m_builder.SameAs(this, RowCount, ColumnCount);
             Storage.MapIndexedTo(result.Storage, (i, j, x) => norminv[j]*x, Zeros.AllowSkip, ExistingData.AssumeZeros);
             return result;
         }
@@ -728,7 +732,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         {
             var ret = new double[RowCount];
             Storage.FoldByRowUnchecked(ret, (s, x) => s + x, (x, c) => x, ret, Zeros.AllowSkip);
-            return Vector<double>.Build.Dense(ret);
+            return v_builder.Dense(ret);
         }
 
         /// <summary>
@@ -738,7 +742,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         {
             var ret = new double[RowCount];
             Storage.FoldByRowUnchecked(ret, (s, x) => s + Math.Abs(x), (x, c) => x, ret, Zeros.AllowSkip);
-            return Vector<double>.Build.Dense(ret);
+            return v_builder.Dense(ret);
         }
 
         /// <summary>
@@ -748,7 +752,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         {
             var ret = new double[ColumnCount];
             Storage.FoldByColumnUnchecked(ret, (s, x) => s + x, (x, c) => x, ret, Zeros.AllowSkip);
-            return Vector<double>.Build.Dense(ret);
+            return v_builder.Dense(ret);
         }
 
         /// <summary>
@@ -758,7 +762,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
         {
             var ret = new double[ColumnCount];
             Storage.FoldByColumnUnchecked(ret, (s, x) => s + Math.Abs(x), (x, c) => x, ret, Zeros.AllowSkip);
-            return Vector<double>.Build.Dense(ret);
+            return v_builder.Dense(ret);
         }
 
         /// <summary>

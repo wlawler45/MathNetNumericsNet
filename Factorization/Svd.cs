@@ -28,7 +28,7 @@
 // </copyright>
 
 using System;
-
+using MathNet.Numerics.LinearAlgebra.Double.MathNet.Numerics.LinearAlgebra;
 
 
 namespace MathNet.Numerics.LinearAlgebra.Factorization
@@ -51,6 +51,8 @@ namespace MathNet.Numerics.LinearAlgebra.Factorization
     public abstract class Svd<T> : ISolver<T>
         where T : struct, IEquatable<T>, IFormattable
     {
+        VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+        MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
         readonly Matrix<T> _lazyW;
 
         /// <summary>Indicating whether U and VT matrices have been computed during SVD factorization.</summary>
@@ -71,7 +73,8 @@ namespace MathNet.Numerics.LinearAlgebra.Factorization
         {
             var rows = U.RowCount;
             var columns = VT.ColumnCount;
-            var result = Matrix<T>.Build.SameAs(U, rows, columns);
+            var result = m_builder.SameAs(U, rows, columns, false);
+
             for (var i = 0; i < rows; i++)
             {
                 for (var j = 0; j < columns; j++)
@@ -146,7 +149,7 @@ namespace MathNet.Numerics.LinearAlgebra.Factorization
                 throw new InvalidOperationException("Resources.SingularVectorsNotComputed");
             }
 
-            var x = Matrix<T>.Build.SameAs(U, VT.ColumnCount, input.ColumnCount, fullyMutable: true);
+            var x = m_builder.SameAs(U, VT.ColumnCount, input.ColumnCount, fullyMutable: true);
             Solve(input, x);
             return x;
         }
@@ -170,7 +173,7 @@ namespace MathNet.Numerics.LinearAlgebra.Factorization
                 throw new InvalidOperationException("Resources.SingularVectorsNotComputed");
             }
 
-            var x = Vector<T>.Build.SameAs(U, VT.ColumnCount);
+            var x = v_builder.SameAs(U, VT.ColumnCount);
             Solve(input, x);
             return x;
         }

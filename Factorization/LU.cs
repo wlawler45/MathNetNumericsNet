@@ -46,6 +46,8 @@ namespace MathNet.Numerics.LinearAlgebra.Factorization
     public abstract class LU<T> : ISolver<T>
         where T : struct, IEquatable<T>, IFormattable
     {
+        public VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+        public MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
         static readonly T One = BuilderInstance<T>.Matrix.One;
 
         readonly Matrix<T> _lazyL;
@@ -111,7 +113,7 @@ namespace MathNet.Numerics.LinearAlgebra.Factorization
         /// <returns>The left hand side <see cref="Matrix{T}"/>, <b>X</b>.</returns>
         public virtual Matrix<T> Solve(Matrix<T> input)
         {
-            var x = Matrix<T>.Build.SameAs(input, input.RowCount, input.ColumnCount, fullyMutable: true);
+            var x = m_builder.SameAs(input, input.RowCount, input.ColumnCount, fullyMutable: true);
             Solve(input, x);
             return x;
         }
@@ -130,7 +132,7 @@ namespace MathNet.Numerics.LinearAlgebra.Factorization
         /// <returns>The left hand side <see cref="Vector{T}"/>, <b>x</b>.</returns>
         public virtual Vector<T> Solve(Vector<T> input)
         {
-            var x = Vector<T>.Build.SameAs(input, input.Count);
+            var x = v_builder.SameAs(input, input.Count);
             Solve(input, x);
             return x;
         }

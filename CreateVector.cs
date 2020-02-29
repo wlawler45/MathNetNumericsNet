@@ -29,7 +29,7 @@
 
 using System;
 using System.Collections.Generic;
-
+using MathNet.Numerics.LinearAlgebra.Double.MathNet.Numerics.LinearAlgebra;
 
 namespace MathNet.Numerics.LinearAlgebra
 {
@@ -48,7 +48,8 @@ namespace MathNet.Numerics.LinearAlgebra
             where T : struct, IEquatable<T>, IFormattable
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            return Vector<T>.Build.SameAs(example, length);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+            return v_builder.SameAs(example, length);
         }
 
         /// <summary>
@@ -58,7 +59,8 @@ namespace MathNet.Numerics.LinearAlgebra
             where T : struct, IEquatable<T>, IFormattable
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            return Vector<T>.Build.SameAs(example);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+            return v_builder.SameAs(example);
         }
 
         /// <summary>
@@ -68,7 +70,9 @@ namespace MathNet.Numerics.LinearAlgebra
             where T : struct, IEquatable<T>, IFormattable
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            return Vector<T>.Build.SameAs(example, length);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SameAs(example, length);
         }
 
         /// <summary>
@@ -77,7 +81,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> SameAs<T>(Vector<T> example, Vector<T> otherExample, int length)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.SameAs(example, otherExample, length);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SameAs(example, otherExample, length);
         }
 
         /// <summary>
@@ -86,7 +92,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> SameAs<T>(Vector<T> example, Vector<T> otherExample)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.SameAs(example, otherExample);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SameAs(example, otherExample);
         }
 
         /// <summary>
@@ -95,7 +103,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> SameAs<T>(Matrix<T> matrix, Vector<T> vector, int length)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.SameAs(matrix, vector, length);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SameAs(matrix, vector, length);
         }
 
         /// <summary>
@@ -127,7 +137,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> Dense<T>(int size)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.Dense(size);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.Dense(size);
         }
 
         /// <summary>
@@ -136,7 +148,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> Dense<T>(T[] array)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.Dense(array);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.Dense(array);
         }
 
         /// <summary>
@@ -145,7 +159,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> Dense<T>(int length, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.Dense(length, value);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.Dense(length, value);
         }
 
         /// <summary>
@@ -154,7 +170,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> Dense<T>(int length, Func<int, T> init)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.Dense(length, init);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.Dense(length, init);
         }
 
         /// <summary>
@@ -165,7 +183,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> DenseOfVector<T>(Vector<T> vector)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.DenseOfVector(vector);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.DenseOfVector(vector);
         }
 
         /// <summary>
@@ -176,7 +196,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> DenseOfArray<T>(T[] array)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.DenseOfArray(array);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.DenseOfArray(array);
         }
 
         /// <summary>
@@ -187,7 +209,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> DenseOfEnumerable<T>(IEnumerable<T> enumerable)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.DenseOfEnumerable(enumerable);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.DenseOfEnumerable(enumerable);
         }
 
         /// <summary>
@@ -199,7 +223,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> DenseOfIndexed<T>(int length, IEnumerable<Tuple<int, T>> enumerable)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.DenseOfIndexed(length, enumerable);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.DenseOfIndexed(length, enumerable);
         }
 
         /// <summary>
@@ -217,7 +243,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> Sparse<T>(int size)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.Sparse(size);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.Sparse(size);
         }
 
         /// <summary>
@@ -226,7 +254,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> Sparse<T>(int length, T value)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.Sparse(length, value);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.Sparse(length, value);
         }
 
         /// <summary>
@@ -235,7 +265,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> Sparse<T>(int length, Func<int, T> init)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.Sparse(length, init);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.Sparse(length, init);
         }
 
         /// <summary>
@@ -246,7 +278,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> SparseOfVector<T>(Vector<T> vector)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.SparseOfVector(vector);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SparseOfVector(vector);
         }
 
         /// <summary>
@@ -257,7 +291,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> SparseOfArray<T>(T[] array)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.SparseOfArray(array);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SparseOfArray(array);
         }
 
         /// <summary>
@@ -268,7 +304,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> SparseOfEnumerable<T>(IEnumerable<T> enumerable)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.SparseOfEnumerable(enumerable);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SparseOfEnumerable(enumerable);
         }
 
         /// <summary>
@@ -280,7 +318,9 @@ namespace MathNet.Numerics.LinearAlgebra
         public static Vector<T> SparseOfIndexed<T>(int length, IEnumerable<Tuple<int, T>> enumerable)
             where T : struct, IEquatable<T>, IFormattable
         {
-            return Vector<T>.Build.SparseOfIndexed(length, enumerable);
+            VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+
+            return v_builder.SparseOfIndexed(length, enumerable);
         }
     }
 }

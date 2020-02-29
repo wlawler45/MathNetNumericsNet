@@ -1317,9 +1317,9 @@ namespace MathNet.Numerics.LinearAlgebra.Double
             }
         }
 
-        internal static class BuilderInstance<T> where T : struct, IEquatable<T>, IFormattable
+        public static class BuilderInstance<T> where T : struct, IEquatable<T>, IFormattable
         {
-            static Tuple<MatrixBuilder<T>, VectorBuilder<T>> _singleton;
+            static Tuple<MatrixBuilder<T>, VectorBuilder<T>> _singleton = Create();
 
             static Tuple<MatrixBuilder<T>, VectorBuilder<T>> Create()
             {

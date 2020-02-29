@@ -51,6 +51,9 @@ namespace MathNet.Numerics.LinearAlgebra
 #endif
         where T : struct, IEquatable<T>, IFormattable
     {
+        VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+        MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
+
         /// <summary>
         /// Initializes a new instance of the Matrix class.
         /// </summary>
@@ -60,9 +63,7 @@ namespace MathNet.Numerics.LinearAlgebra
             RowCount = storage.RowCount;
             ColumnCount = storage.ColumnCount;
         }
-
-        public static readonly MatrixBuilder<T> Build = BuilderInstance<T>.Matrix;
-
+        
         /// <summary>
         /// Gets the raw matrix data storage.
         /// </summary>
@@ -228,7 +229,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// </returns>
         public Matrix<T> Clone()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             Storage.CopyToUnchecked(result.Storage, ExistingData.AssumeZeros);
             return result;
         }
@@ -269,7 +270,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            var ret = Vector<T>.Build.SameAs(this, ColumnCount);
+            var ret = v_builder.SameAs(this, ColumnCount);
             Storage.CopySubRowToUnchecked(ret.Storage, index, 0, 0, ColumnCount, ExistingData.AssumeZeros);
             return ret;
         }
@@ -309,7 +310,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <exception cref="ArgumentOutOfRangeException">If <paramref name="length"/> is not positive.</exception>
         public Vector<T> Row(int rowIndex, int columnIndex, int length)
         {
-            var ret = Vector<T>.Build.SameAs(this, length);
+            var ret = v_builder.SameAs(this, length);
             Storage.CopySubRowTo(ret.Storage, rowIndex, columnIndex, 0, length);
             return ret;
         }
@@ -354,7 +355,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentOutOfRangeException(nameof(index));
             }
 
-            var ret = Vector<T>.Build.SameAs(this, RowCount);
+            var ret = v_builder.SameAs(this, RowCount);
             Storage.CopySubColumnToUnchecked(ret.Storage, index, 0, 0, RowCount, ExistingData.AssumeZeros);
             return ret;
         }
@@ -395,7 +396,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <exception cref="ArgumentOutOfRangeException">If <paramref name="length"/> is not positive.</exception>
         public Vector<T> Column(int columnIndex, int rowIndex, int length)
         {
-            var ret = Vector<T>.Build.SameAs(this, length);
+            var ret = v_builder.SameAs(this, length);
             Storage.CopySubColumnTo(ret.Storage, columnIndex, rowIndex, 0, length);
             return ret;
         }
@@ -432,7 +433,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The upper triangle of this matrix.</returns>
         public virtual Matrix<T> UpperTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             for (var row = 0; row < RowCount; row++)
             {
                 for (var column = row; column < ColumnCount; column++)
@@ -449,7 +450,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The lower triangle of this matrix.</returns>
         public virtual Matrix<T> LowerTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             for (var row = 0; row < RowCount; row++)
             {
                 for (var column = 0; column <= row && column < ColumnCount; column++)
@@ -532,7 +533,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// is not positive.</exception>
         public virtual Matrix<T> SubMatrix(int rowIndex, int rowCount, int columnIndex, int columnCount)
         {
-            var result = Build.SameAs(this, rowCount, columnCount);
+            var result = m_builder.SameAs(this, rowCount, columnCount);
             Storage.CopySubMatrixTo(result.Storage, rowIndex, 0, rowCount, columnIndex, 0, columnCount, ExistingData.AssumeZeros);
             return result;
         }
@@ -546,7 +547,7 @@ namespace MathNet.Numerics.LinearAlgebra
         public virtual Vector<T> Diagonal()
         {
             var min = Math.Min(RowCount, ColumnCount);
-            var diagonal = Vector<T>.Build.SameAs(this, min);
+            var diagonal = v_builder.SameAs(this, min);
 
             for (var i = 0; i < min; i++)
             {
@@ -563,7 +564,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The lower triangle of this matrix.</returns>
         public virtual Matrix<T> StrictlyLowerTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             for (var row = 0; row < RowCount; row++)
             {
                 var columns = Math.Min(row, ColumnCount);
@@ -609,7 +610,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The upper triangle of this matrix.</returns>
         public virtual Matrix<T> StrictlyUpperTriangle()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             for (var row = 0; row < RowCount; row++)
             {
                 for (var column = row + 1; column < ColumnCount; column++)
@@ -673,7 +674,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentMatrixSameRowDimension{0}", nameof(column));
             }
 
-            var result = Build.SameAs(this, RowCount, ColumnCount + 1, fullyMutable: true);
+            var result = m_builder.SameAs(this, RowCount, ColumnCount + 1, fullyMutable: true);
             Storage.CopySubMatrixTo(result.Storage, 0, 0, RowCount, 0, 0, columnIndex, ExistingData.AssumeZeros);
             result.SetColumn(columnIndex, column);
             Storage.CopySubMatrixTo(result.Storage, 0, 0, RowCount, columnIndex, columnIndex + 1, ColumnCount - columnIndex, ExistingData.AssumeZeros);
@@ -693,7 +694,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentOutOfRangeException(nameof(columnIndex));
             }
 
-            var result = Build.SameAs(this, RowCount, ColumnCount - 1, fullyMutable: true);
+            var result = m_builder.SameAs(this, RowCount, ColumnCount - 1, fullyMutable: true);
             Storage.CopySubMatrixTo(result.Storage, 0, 0, RowCount, 0, 0, columnIndex, ExistingData.AssumeZeros);
             Storage.CopySubMatrixTo(result.Storage, 0, 0, RowCount, columnIndex + 1, columnIndex, ColumnCount - columnIndex - 1, ExistingData.AssumeZeros);
             return result;
@@ -789,7 +790,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentMatrixSameRowDimension{0}", nameof(row));
             }
 
-            var result = Build.SameAs(this, RowCount + 1, ColumnCount, fullyMutable: true);
+            var result = m_builder.SameAs(this, RowCount + 1, ColumnCount, fullyMutable: true);
             Storage.CopySubMatrixTo(result.Storage, 0, 0, rowIndex, 0, 0, ColumnCount, ExistingData.AssumeZeros);
             result.SetRow(rowIndex, row);
             Storage.CopySubMatrixTo(result.Storage, rowIndex, rowIndex+1, RowCount - rowIndex, 0, 0, ColumnCount, ExistingData.AssumeZeros);
@@ -809,7 +810,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentOutOfRangeException(nameof(rowIndex));
             }
 
-            var result = Build.SameAs(this, RowCount - 1, ColumnCount, fullyMutable: true);
+            var result = m_builder.SameAs(this, RowCount - 1, ColumnCount, fullyMutable: true);
             Storage.CopySubMatrixTo(result.Storage, 0, 0, rowIndex, 0, 0, ColumnCount, ExistingData.AssumeZeros);
             Storage.CopySubMatrixTo(result.Storage, rowIndex + 1, rowIndex, RowCount - rowIndex - 1, 0, 0, ColumnCount, ExistingData.AssumeZeros);
             return result;
@@ -1007,7 +1008,8 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The transpose of this matrix.</returns>
         public Matrix<T> Transpose()
         {
-            var result = Build.SameAs(this, ColumnCount, RowCount);
+
+            var result = m_builder.SameAs(this, ColumnCount, RowCount);
             Storage.TransposeToUnchecked(result.Storage, ExistingData.AssumeZeros);
             return result;
         }
@@ -1062,7 +1064,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentMatrixSameRowDimension");
             }
 
-            var result = Build.SameAs(this, right, RowCount, ColumnCount + right.ColumnCount, fullyMutable: true);
+            var result = m_builder.SameAs(this, right, RowCount, ColumnCount + right.ColumnCount, fullyMutable: true);
             Storage.CopySubMatrixToUnchecked(result.Storage, 0, 0, RowCount, 0, 0, ColumnCount, ExistingData.AssumeZeros);
             right.Storage.CopySubMatrixToUnchecked(result.Storage, 0, 0, right.RowCount, 0, ColumnCount, right.ColumnCount, ExistingData.AssumeZeros);
             return result;
@@ -1122,7 +1124,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentMatrixSameColumnDimension{0}", nameof(lower));
             }
 
-            var result = Build.SameAs(this, lower, RowCount + lower.RowCount, ColumnCount, fullyMutable: true);
+            var result = m_builder.SameAs(this, lower, RowCount + lower.RowCount, ColumnCount, fullyMutable: true);
             Storage.CopySubMatrixToUnchecked(result.Storage, 0, 0, RowCount, 0, 0, ColumnCount, ExistingData.AssumeZeros);
             lower.Storage.CopySubMatrixToUnchecked(result.Storage, 0, RowCount, lower.RowCount, 0, 0, lower.ColumnCount, ExistingData.AssumeZeros);
             return result;
@@ -1180,7 +1182,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentNullException(nameof(lower));
             }
 
-            var result = Build.SameAs(this, lower, RowCount + lower.RowCount, ColumnCount + lower.ColumnCount, RowCount != ColumnCount);
+            var result = m_builder.SameAs(this, lower, RowCount + lower.RowCount, ColumnCount + lower.ColumnCount, RowCount != ColumnCount);
             Storage.CopySubMatrixToUnchecked(result.Storage, 0, 0, RowCount, 0, 0, ColumnCount, ExistingData.AssumeZeros);
             lower.Storage.CopySubMatrixToUnchecked(result.Storage, 0, RowCount, lower.RowCount, 0, ColumnCount, lower.ColumnCount, ExistingData.AssumeZeros);
             return result;
@@ -1644,7 +1646,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public Matrix<TU> Map<TU>(Func<T, TU> f, Zeros zeros = Zeros.AllowSkip)
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            var result = Matrix<TU>.Build.SameAs(this, RowCount, ColumnCount, fullyMutable: zeros == Zeros.Include);
+            MatrixBuilder<TU> m_builder = BuilderInstance<TU>.Matrix;
+            var result = m_builder.SameAs(this, RowCount, ColumnCount, fullyMutable: zeros == Zeros.Include);
             Storage.MapToUnchecked(result.Storage, f, zeros, ExistingData.AssumeZeros);
             return result;
         }
@@ -1658,7 +1661,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public Matrix<TU> MapIndexed<TU>(Func<int, int, T, TU> f, Zeros zeros = Zeros.AllowSkip)
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            var result = Matrix<TU>.Build.SameAs(this, RowCount, ColumnCount, fullyMutable: zeros == Zeros.Include);
+            MatrixBuilder<TU> m_builder = BuilderInstance<TU>.Matrix;
+            var result = m_builder.SameAs(this, RowCount, ColumnCount, fullyMutable: zeros == Zeros.Include);
             Storage.MapIndexedToUnchecked(result.Storage, f, zeros, ExistingData.AssumeZeros);
             return result;
         }
@@ -1760,7 +1764,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// </summary>
         public Matrix<T> Map2(Func<T, T, T> f, Matrix<T> other, Zeros zeros = Zeros.AllowSkip)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             Storage.Map2To(result.Storage, other.Storage, f, zeros, ExistingData.AssumeZeros);
             return result;
         }

@@ -124,7 +124,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="result">The matrix to store the result of the product.</param>
         protected void DoOuterProduct(Vector<T> other, Matrix<T> result)
         {
-            var work = Build.Dense(Count);
+            var work = v_builder.Dense(Count);
             for (var i = 0; i < other.Count; i++)
             {
                 DoMultiply(other.At(i), work);
@@ -273,7 +273,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 return Clone();
             }
 
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoAdd(scalar, result);
             return result;
         }
@@ -313,7 +313,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(other));
             }
 
-            var result = Build.SameAs(this, other);
+            var result = v_builder.SameAs(this, other);
             DoAdd(other, result);
             return result;
         }
@@ -347,7 +347,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 return Clone();
             }
 
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoSubtract(scalar, result);
             return result;
         }
@@ -381,7 +381,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A new vector containing the subtraction of the scalar and this vector.</returns>
         public Vector<T> SubtractFrom(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoSubtractFrom(scalar, result);
             return result;
         }
@@ -409,7 +409,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <remarks>Added as an alternative to the unary negation operator.</remarks>
         public Vector<T> Negate()
         {
-            var retrunVector = Build.SameAs(this);
+            var retrunVector = v_builder.SameAs(this);
             DoNegate(retrunVector);
             return retrunVector;
         }
@@ -441,7 +441,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(other));
             }
 
-            var result = Build.SameAs(this, other);
+            var result = v_builder.SameAs(this, other);
             DoSubtract(other, result);
             return result;
         }
@@ -469,7 +469,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>Conjugated vector</returns>
         public Vector<T> Conjugate()
         {
-            var retrunVector = Build.SameAs(this);
+            var retrunVector = v_builder.SameAs(this);
             DoConjugate(retrunVector);
             return retrunVector;
         }
@@ -502,10 +502,10 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (scalar.Equals(Zero))
             {
-                return Build.SameAs(this);
+                return v_builder.SameAs(this);
             }
 
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoMultiply(scalar, result);
             return result;
         }
@@ -579,7 +579,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 return Clone();
             }
 
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoDivide(scalar, result);
             return result;
         }
@@ -613,7 +613,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A new vector that is the division of the vector and the scalar.</returns>
         public Vector<T> DivideByThis(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoDivideByThis(scalar, result);
             return result;
         }
@@ -642,7 +642,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A vector containing the result.</returns>
         public Vector<T> Modulus(T divisor)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoModulus(divisor, result);
             return result;
         }
@@ -671,7 +671,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A vector containing the result.</returns>
         public Vector<T> ModulusByThis(T dividend)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoModulusByThis(dividend, result);
             return result;
         }
@@ -700,7 +700,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A vector containing the result.</returns>
         public Vector<T> Remainder(T divisor)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoRemainder(divisor, result);
             return result;
         }
@@ -729,7 +729,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A vector containing the result.</returns>
         public Vector<T> RemainderByThis(T dividend)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoRemainderByThis(dividend, result);
             return result;
         }
@@ -763,7 +763,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(other));
             }
 
-            var result = Build.SameAs(this, other);
+            var result = v_builder.SameAs(this, other);
             DoPointwiseMultiply(other, result);
             return result;
         }
@@ -803,7 +803,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(divisor));
             }
 
-            var result = Build.SameAs(this, divisor);
+            var result = v_builder.SameAs(this, divisor);
             DoPointwiseDivide(divisor, result);
             return result;
         }
@@ -836,7 +836,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="exponent">The exponent to raise this vector values to.</param>
         public Vector<T> PointwisePower(T exponent)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwisePower(exponent, result);
             return result;
         }
@@ -868,7 +868,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(exponent));
             }
 
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwisePower(exponent, result);
             return result;
         }
@@ -907,7 +907,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(divisor));
             }
 
-            var result = Build.SameAs(this, divisor);
+            var result = v_builder.SameAs(this, divisor);
             DoPointwiseModulus(divisor, result);
             return result;
         }
@@ -947,7 +947,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(divisor));
             }
 
-            var result = Build.SameAs(this, divisor);
+            var result = v_builder.SameAs(this, divisor);
             DoPointwiseRemainder(divisor, result);
             return result;
         }
@@ -985,7 +985,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>New instance of vector which is the result</returns>
         protected Vector<T> PointwiseUnary(Action<Vector<T>> f)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             f(result);
             return result;
         }
@@ -1018,7 +1018,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The resulting vector</returns>
         protected Vector<T> PointwiseBinary(Action<T, Vector<T>> f, T other)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             f(other, result);
             return result;
         }
@@ -1057,7 +1057,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new ArgumentException("Resources.ArgumentVectorsSameLength", nameof(other));
             }
 
-            var result = Build.SameAs(this, other);
+            var result = v_builder.SameAs(this, other);
             f(other, result);
             return result;
         }
@@ -1421,7 +1421,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The other vector</param>
         public Matrix<T> OuterProduct(Vector<T> other)
         {
-            var matrix = Matrix<T>.Build.SameAs(this, Count, other.Count);
+            var matrix = m_builder.SameAs(this, Count, other.Count);
             DoOuterProduct(other, matrix);
             return matrix;
         }
@@ -1452,7 +1452,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Vector<T> PointwiseMinimum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseMinimum(scalar, result);
             return result;
         }
@@ -1479,7 +1479,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Vector<T> PointwiseMaximum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseMaximum(scalar, result);
             return result;
         }
@@ -1506,7 +1506,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Vector<T> PointwiseAbsoluteMinimum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseAbsoluteMinimum(scalar, result);
             return result;
         }
@@ -1533,7 +1533,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Vector<T> PointwiseAbsoluteMaximum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseAbsoluteMaximum(scalar, result);
             return result;
         }
@@ -1560,7 +1560,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The vector with the values to compare to.</param>
         public Vector<T> PointwiseMinimum(Vector<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseMinimum(other, result);
             return result;
         }
@@ -1587,7 +1587,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The vector with the values to compare to.</param>
         public Vector<T> PointwiseMaximum(Vector<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseMaximum(other, result);
             return result;
         }
@@ -1614,7 +1614,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The vector with the values to compare to.</param>
         public Vector<T> PointwiseAbsoluteMinimum(Vector<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseAbsoluteMinimum(other, result);
             return result;
         }
@@ -1641,7 +1641,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The vector with the values to compare to.</param>
         public Vector<T> PointwiseAbsoluteMaximum(Vector<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             DoPointwiseAbsoluteMaximum(other, result);
             return result;
         }

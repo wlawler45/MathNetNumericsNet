@@ -305,7 +305,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 return Clone();
             }
 
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoAdd(scalar, result);
             return result;
         }
@@ -345,7 +345,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentOutOfRangeException>(this, other);
             }
 
-            var result = Build.SameAs(this, other, RowCount, ColumnCount);
+            var result = m_builder.SameAs(this, other, RowCount, ColumnCount);
             DoAdd(other, result);
             return result;
         }
@@ -383,7 +383,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 return Clone();
             }
 
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoSubtract(scalar, result);
             return result;
         }
@@ -417,7 +417,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A new matrix containing the subtraction of the scalar and this matrix.</returns>
         public Matrix<T> SubtractFrom(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoSubtractFrom(scalar, result);
             return result;
         }
@@ -451,7 +451,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentOutOfRangeException>(this, other);
             }
 
-            var result = Build.SameAs(this, other, RowCount, ColumnCount);
+            var result = m_builder.SameAs(this, other, RowCount, ColumnCount);
             DoSubtract(other, result);
             return result;
         }
@@ -491,10 +491,10 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (scalar.Equals(Zero))
             {
-                return Build.SameAs(this);
+                return m_builder.SameAs(this);
             }
 
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoMultiply(scalar, result);
             return result;
         }
@@ -549,7 +549,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw new DivideByZeroException();
             }
 
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoDivide(scalar, result);
             return result;
         }
@@ -593,7 +593,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The result of the division.</returns>
         public Matrix<T> DivideByThis(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoDivideByThis(scalar, result);
             return result;
         }
@@ -632,7 +632,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, rightSide, "rightSide");
             }
 
-            var ret = Vector<T>.Build.SameAs(this, rightSide, RowCount);
+            var ret = v_builder.SameAs(this, rightSide, RowCount);
             DoMultiply(rightSide, ret);
             return ret;
         }
@@ -658,7 +658,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(rightSide, result))
             {
-                var tmp = Vector<T>.Build.SameAs(result);
+                var tmp = v_builder.SameAs(result);
                 DoMultiply(rightSide, tmp);
                 tmp.CopyTo(result);
             }
@@ -681,7 +681,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, leftSide, "leftSide");
             }
 
-            var ret = Vector<T>.Build.SameAs(this, leftSide, ColumnCount);
+            var ret = v_builder.SameAs(this, leftSide, ColumnCount);
             DoLeftMultiply(leftSide, ret);
             return ret;
         }
@@ -707,7 +707,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(leftSide, result))
             {
-                var tmp = Vector<T>.Build.SameAs(result);
+                var tmp = v_builder.SameAs(result);
                 DoLeftMultiply(leftSide, tmp);
                 tmp.CopyTo(result);
             }
@@ -743,7 +743,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(this, result) || ReferenceEquals(other, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 DoMultiply(other, tmp);
                 tmp.CopyTo(result);
             }
@@ -766,7 +766,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, other);
             }
 
-            var result = Build.SameAs(this, other, RowCount, other.ColumnCount);
+            var result = m_builder.SameAs(this, other, RowCount, other.ColumnCount);
             DoMultiply(other, result);
             return result;
         }
@@ -787,7 +787,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(this, result) || ReferenceEquals(other, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 DoTransposeAndMultiply(other, tmp);
                 tmp.CopyTo(result);
             }
@@ -810,7 +810,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, other);
             }
 
-            var result = Build.SameAs(this, other, RowCount, other.RowCount);
+            var result = m_builder.SameAs(this, other, RowCount, other.RowCount);
             DoTransposeAndMultiply(other, result);
             return result;
         }
@@ -828,7 +828,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, rightSide, "rightSide");
             }
 
-            var result = Vector<T>.Build.SameAs(this, rightSide, ColumnCount);
+            var result = v_builder.SameAs(this, rightSide, ColumnCount);
             DoTransposeThisAndMultiply(rightSide, result);
             return result;
         }
@@ -854,7 +854,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(rightSide, result))
             {
-                var tmp = Vector<T>.Build.SameAs(result);
+                var tmp = v_builder.SameAs(result);
                 DoTransposeThisAndMultiply(rightSide, tmp);
                 tmp.CopyTo(result);
             }
@@ -880,7 +880,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(this, result) || ReferenceEquals(other, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 DoTransposeThisAndMultiply(other, tmp);
                 tmp.CopyTo(result);
             }
@@ -903,7 +903,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, other);
             }
 
-            var result = Build.SameAs(this, other, ColumnCount, other.ColumnCount);
+            var result = m_builder.SameAs(this, other, ColumnCount, other.ColumnCount);
             DoTransposeThisAndMultiply(other, result);
             return result;
         }
@@ -926,7 +926,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(this, result) || ReferenceEquals(other, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 DoConjugateTransposeAndMultiply(other, tmp);
                 tmp.CopyTo(result);
             }
@@ -949,7 +949,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, other);
             }
 
-            var result = Build.SameAs(this, other, RowCount, other.RowCount);
+            var result = m_builder.SameAs(this, other, RowCount, other.RowCount);
             DoConjugateTransposeAndMultiply(other, result);
             return result;
         }
@@ -967,7 +967,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, rightSide, "rightSide");
             }
 
-            var result = Vector<T>.Build.SameAs(this, rightSide, ColumnCount);
+            var result = v_builder.SameAs(this, rightSide, ColumnCount);
             DoConjugateTransposeThisAndMultiply(rightSide, result);
             return result;
         }
@@ -993,7 +993,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(rightSide, result))
             {
-                var tmp = Vector<T>.Build.SameAs(result);
+                var tmp = v_builder.SameAs(result);
                 DoConjugateTransposeThisAndMultiply(rightSide, tmp);
                 tmp.CopyTo(result);
             }
@@ -1019,7 +1019,7 @@ namespace MathNet.Numerics.LinearAlgebra
 
             if (ReferenceEquals(this, result) || ReferenceEquals(other, result))
             {
-                var tmp = Build.SameAs(result);
+                var tmp = m_builder.SameAs(result);
                 DoConjugateTransposeThisAndMultiply(other, tmp);
                 tmp.CopyTo(result);
             }
@@ -1042,7 +1042,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, other);
             }
 
-            var result = Build.SameAs(this, other, ColumnCount, other.ColumnCount);
+            var result = m_builder.SameAs(this, other, ColumnCount, other.ColumnCount);
             DoConjugateTransposeThisAndMultiply(other, result);
             return result;
         }
@@ -1123,7 +1123,7 @@ namespace MathNet.Numerics.LinearAlgebra
             }
             if (exponent == 0)
             {
-                Build.DiagonalIdentity(RowCount, ColumnCount).CopyTo(result);
+                m_builder.DiagonalIdentity(RowCount, ColumnCount).CopyTo(result);
                 return;
             }
             if (exponent == 1)
@@ -1153,7 +1153,7 @@ namespace MathNet.Numerics.LinearAlgebra
             if (RowCount != ColumnCount) throw new ArgumentException("Resources.ArgumentMatrixSquare");
             if (exponent < 0) throw new ArgumentException("Resources.ArgumentNotNegative");
 
-            if (exponent == 0) return Build.DiagonalIdentity(RowCount, ColumnCount);
+            if (exponent == 0) return m_builder.DiagonalIdentity(RowCount, ColumnCount);
             if (exponent == 1) return this;
             if (exponent == 2) return Multiply(this);
 
@@ -1166,7 +1166,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A matrix containing the negated values.</returns>
         public Matrix<T> Negate()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoNegate(result);
             return result;
         }
@@ -1192,7 +1192,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A matrix containing the conjugated values.</returns>
         public Matrix<T> Conjugate()
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoConjugate(result);
             return result;
         }
@@ -1220,7 +1220,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A matrix containing the results.</returns>
         public Matrix<T> Modulus(T divisor)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoModulus(divisor, result);
             return result;
         }
@@ -1249,7 +1249,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A matrix containing the results.</returns>
         public Matrix<T> ModulusByThis(T dividend)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoModulusByThis(dividend, result);
             return result;
         }
@@ -1278,7 +1278,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A matrix containing the results.</returns>
         public Matrix<T> Remainder(T divisor)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoRemainder(divisor, result);
             return result;
         }
@@ -1307,7 +1307,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A matrix containing the results.</returns>
         public Matrix<T> RemainderByThis(T dividend)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoRemainderByThis(dividend, result);
             return result;
         }
@@ -1341,7 +1341,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, other, "other");
             }
 
-            var result = Build.SameAs(this, other);
+            var result = m_builder.SameAs(this, other);
             DoPointwiseMultiply(other, result);
             return result;
         }
@@ -1376,7 +1376,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, divisor);
             }
 
-            var result = Build.SameAs(this, divisor);
+            var result = m_builder.SameAs(this, divisor);
             DoPointwiseDivide(divisor, result);
             return result;
         }
@@ -1404,7 +1404,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="exponent">The exponent to raise this matrix values to.</param>
         public Matrix<T> PointwisePower(T exponent)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwisePower(exponent, result);
             return result;
         }
@@ -1436,7 +1436,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, exponent);
             }
 
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwisePower(exponent, result);
             return result;
         }
@@ -1470,7 +1470,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, divisor);
             }
 
-            var result = Build.SameAs(this, divisor);
+            var result = m_builder.SameAs(this, divisor);
             DoPointwiseModulus(divisor, result);
             return result;
         }
@@ -1506,7 +1506,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, divisor);
             }
 
-            var result = Build.SameAs(this, divisor);
+            var result = m_builder.SameAs(this, divisor);
             DoPointwiseRemainder(divisor, result);
             return result;
         }
@@ -1539,7 +1539,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>New instance of matrix which is the result</returns>
         protected Matrix<T> PointwiseUnary(Action<Matrix<T>> f)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             f(result);
             return result;
         }
@@ -1577,7 +1577,7 @@ namespace MathNet.Numerics.LinearAlgebra
                 throw DimensionsDontMatch<ArgumentException>(this, other);
             }
 
-            var result = Build.SameAs(this, other);
+            var result = m_builder.SameAs(this, other);
             f(other, result);
             return result;
         }
@@ -2024,7 +2024,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>The Kronecker product of the two matrices.</returns>
         public Matrix<T> KroneckerProduct(Matrix<T> other)
         {
-            var result = Build.SameAs(this, other, RowCount*other.RowCount, ColumnCount*other.ColumnCount);
+            var result = m_builder.SameAs(this, other, RowCount*other.RowCount, ColumnCount*other.ColumnCount);
             KroneckerProduct(other, result);
             return result;
         }
@@ -2058,7 +2058,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Matrix<T> PointwiseMinimum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseMinimum(scalar, result);
             return result;
         }
@@ -2085,7 +2085,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Matrix<T> PointwiseMaximum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseMaximum(scalar, result);
             return result;
         }
@@ -2112,7 +2112,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Matrix<T> PointwiseAbsoluteMinimum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseAbsoluteMinimum(scalar, result);
             return result;
         }
@@ -2139,7 +2139,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="scalar">The scalar value to compare to.</param>
         public Matrix<T> PointwiseAbsoluteMaximum(T scalar)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseAbsoluteMaximum(scalar, result);
             return result;
         }
@@ -2166,7 +2166,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The matrix with the values to compare to.</param>
         public Matrix<T> PointwiseMinimum(Matrix<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseMinimum(other, result);
             return result;
         }
@@ -2193,7 +2193,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The matrix with the values to compare to.</param>
         public Matrix<T> PointwiseMaximum(Matrix<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseMaximum(other, result);
             return result;
         }
@@ -2220,7 +2220,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The matrix with the values to compare to.</param>
         public Matrix<T> PointwiseAbsoluteMinimum(Matrix<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseAbsoluteMinimum(other, result);
             return result;
         }
@@ -2247,7 +2247,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <param name="other">The matrix with the values to compare to.</param>
         public Matrix<T> PointwiseAbsoluteMaximum(Matrix<T> other)
         {
-            var result = Build.SameAs(this);
+            var result = m_builder.SameAs(this);
             DoPointwiseAbsoluteMaximum(other, result);
             return result;
         }

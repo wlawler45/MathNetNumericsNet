@@ -754,7 +754,7 @@ namespace MathNetNumerics
 
         bool AlmostEquals(double val1, double val2)
         {
-            if (Math.Abs(val1 - val2) < (1 * 10 ^ -8)) return true;
+            if (Math.Abs(val1 - val2) < (Math.Pow(10,-8))) return true;
             return false;
         }
 

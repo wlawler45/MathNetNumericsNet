@@ -1,0 +1,11 @@
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\bin\Debug\MathNetNumerics.dll
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\bin\Debug\MathNetNumerics.pdb
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\bin\Debug\Bridge.dll
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\bin\Debug\Bridge.xml
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\obj\Debug\MathNetNumerics.csproj.CoreCompileInputs.cache
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\obj\Debug\MathNetNumerics.csproj.CopyComplete
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\obj\Debug\MathNetNumerics.dll
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\obj\Debug\MathNetNumerics.pdb
+C:\Users\Dawson Cohen\robotraconteur\MathNetNumerics\obj\Debug\MathNetNumerics.csprojAssemblyReference.cache

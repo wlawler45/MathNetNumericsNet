@@ -274,7 +274,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
             }
             else
             {
-                Matrix<double> I = Build.Dense(ColumnCount, RowCount);
+                Matrix<double> I = m_builder.Dense(ColumnCount, RowCount);
 
                 for (int x = 0; x < ColumnCount; x++)
                 {

@@ -571,16 +571,13 @@ namespace MathNet.Numerics.LinearAlgebra.Double
             }
             else
             {
-                Matrix<double> I = Build.Dense(ColumnCount, RowCount);
-
                 for (int x = 0; x < ColumnCount; x++)
                 {
                     for (int y = 0; y < RowCount; y++)
                     {
-                        I[y, x] = this[y, x]*scalar;
+                        result[y, x] = _values[x*3 + y]*scalar;
                     }
                 }
-                result = I;
             }
         }
 
@@ -806,7 +803,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double
             else
             {
 
-                Matrix<double> I = Build.Dense(ColumnCount,RowCount);
+                Matrix<double> I = m_builder.Dense(ColumnCount,RowCount);
 
                 for(int x=0;x<ColumnCount;x++)
                 {

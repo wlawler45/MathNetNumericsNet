@@ -49,6 +49,8 @@ namespace MathNet.Numerics.LinearAlgebra
 #endif
         where T : struct, IEquatable<T>, IFormattable
     {
+        public VectorBuilder<T> v_builder = BuilderInstance<T>.Vector;
+        public MatrixBuilder<T> m_builder = BuilderInstance<T>.Matrix;
         /// <summary>
         /// Initializes a new instance of the Vector class.
         /// </summary>
@@ -57,8 +59,6 @@ namespace MathNet.Numerics.LinearAlgebra
             Storage = storage;
             Count = storage.Length;
         }
-
-        public static readonly VectorBuilder<T> Build = BuilderInstance<T>.Vector;
 
         /// <summary>
         /// Gets the raw vector data storage.
@@ -159,7 +159,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <returns>A deep-copy clone of the vector.</returns>
         public Vector<T> Clone()
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             Storage.CopyToUnchecked(result.Storage, ExistingData.AssumeZeros);
             return result;
         }
@@ -205,7 +205,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// <exception cref="ArgumentException">If <paramref name="count"/> is not positive.</exception>
         public Vector<T> SubVector(int index, int count)
         {
-            var target = Build.SameAs(this, count);
+            var target = v_builder.SameAs(this, count);
             Storage.CopySubVectorTo(target.Storage, index, 0, count, ExistingData.AssumeZeros);
             return target;
         }
@@ -274,7 +274,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// </returns>
         public Matrix<T> ToColumnMatrix()
         {
-            var result = Matrix<T>.Build.SameAs(this, Count, 1);
+            var result = m_builder.SameAs(this, Count, 1);
             Storage.CopyToColumnUnchecked(result.Storage, 0, ExistingData.AssumeZeros);
             return result;
         }
@@ -287,7 +287,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// </returns>
         public Matrix<T> ToRowMatrix()
         {
-            var result = Matrix<T>.Build.SameAs(this, 1, Count);
+            var result = m_builder.SameAs(this, 1, Count);
             Storage.CopyToRowUnchecked(result.Storage, 0, ExistingData.AssumeZeros);
             return result;
         }
@@ -439,7 +439,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public Vector<TU> Map<TU>(Func<T, TU> f, Zeros zeros = Zeros.AllowSkip)
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            var result = Vector<TU>.Build.SameAs(this);
+            VectorBuilder<TU> v_builder = BuilderInstance<TU>.Vector;
+            var result = v_builder.SameAs(this);
             Storage.MapToUnchecked(result.Storage, f, zeros, ExistingData.AssumeZeros);
             return result;
         }
@@ -453,7 +454,8 @@ namespace MathNet.Numerics.LinearAlgebra
         public Vector<TU> MapIndexed<TU>(Func<int, T, TU> f, Zeros zeros = Zeros.AllowSkip)
             where TU : struct, IEquatable<TU>, IFormattable
         {
-            var result = Vector<TU>.Build.SameAs(this);
+            VectorBuilder<TU> v_builder = BuilderInstance<TU>.Vector;
+            var result = v_builder.SameAs(this);
             Storage.MapIndexedToUnchecked(result.Storage, f, zeros, ExistingData.AssumeZeros);
             return result;
         }
@@ -471,7 +473,7 @@ namespace MathNet.Numerics.LinearAlgebra
         /// </summary>
         public Vector<T> Map2(Func<T, T, T> f, Vector<T> other, Zeros zeros = Zeros.AllowSkip)
         {
-            var result = Build.SameAs(this);
+            var result = v_builder.SameAs(this);
             Storage.Map2To(result.Storage, other.Storage, f, zeros, ExistingData.AssumeZeros);
             return result;
         }

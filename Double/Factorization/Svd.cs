@@ -108,7 +108,7 @@ namespace MathNet.Numerics.LinearAlgebra.Double.Factorization
                 foreach (var value in S)
                 {
                     det *= value;
-                    if (Math.Abs(value)<=(1*10^-5))
+                    if (Math.Abs(value)<=(Math.Pow(10,-5)))
                     {
                         return 0;
                     }
